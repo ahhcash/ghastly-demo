@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 // Base URL for GhastlyDB
 const GHASTLY_DB_URL = process.env.GHASTLYDB_URL || "http://localhost:8080";
 
-// Helper function to make API calls to GhastlyDB
+// eslint-disable-next-line
 async function ghastlyRequest(endpoint: string, method: string, body?: any) {
   try {
     const response = await fetch(`${GHASTLY_DB_URL}${endpoint}`, {

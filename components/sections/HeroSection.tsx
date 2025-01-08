@@ -1,8 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
 import GhastlyLogo from "@/components/ui/Logo";
-import { Brain, HardDrive, Globe, Container } from "lucide-react";
+import { Brain, HardDrive, Container } from "lucide-react";
 
 export default function HeroSection() {
   return (
@@ -124,12 +123,12 @@ export default function HeroSection() {
           </p>
 
           <p>
-            right now, it's super basic - you can only do puts, gets, deletes,
-            and semantic search. but i'm actively working on adding more
-            features like proper indexing, compaction, write-ahead logs and
-            maybe full implementing the Redis API! also planning to add more
-            embedding models and distance metrics. if you're curious about any
-            of this stuff, the code is{" "}
+            right now, it&apos;s super basic - you can only do puts, gets,
+            deletes, and semantic search. but i&apos;m actively working on
+            adding more features like proper indexing, compaction, write-ahead
+            logs and maybe full implementing the Redis API! also planning to add
+            more embedding models and distance metrics. if you&apos;re curious
+            about any of this stuff, the code is{" "}
             <a
               href="https://github.com/ahhcash/ghastly"
               className="text-blue-500 hover:text-blue-400"
@@ -142,7 +141,7 @@ export default function HeroSection() {
           </p>
 
           <p className="text-zinc-500 text-sm mt-4">
-            ps: this is not production ready yet! it's just a fun learning
+            ps: this is not production ready yet! it&apos;s just a fun learning
             project. if you need a real vector db, check out{" "}
             <a
               href="https://weaviate.io"

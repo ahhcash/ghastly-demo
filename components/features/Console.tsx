@@ -66,7 +66,7 @@ export default function Console() {
     if (!command.trim()) return;
 
     const { action, args } = parseCommand(command);
-    let response: CommandHistory = {
+    const response: CommandHistory = {
       command,
       output: "",
       type: "info",
