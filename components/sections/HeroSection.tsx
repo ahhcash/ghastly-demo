@@ -18,7 +18,6 @@ export default function HeroSection() {
           ghastly<span className="text-blue-500">DB</span>
         </h1>
       </div>
-
       {/* Main Heading */}
       <h2 className="text-4xl font-bold tracking-tight text-white md:text-6xl max-w-3xl">
         a lightweight vector database built from{" "}
@@ -110,8 +109,9 @@ export default function HeroSection() {
             i decided the best way to learn was to build one from scratch.
             ghastlyDB uses a{" "}
             <a
-              href="https://www.scylladb.com/glossary/log-structured-merge-tree/LSM"
+              href="https://www.scylladb.com/glossary/log-structured-merge-tree/"
               className="text-blue-500 hover:text-blue-400"
+              target="_blank"
             >
               Log-Structured Merge (LSM) tree architecture{" "}
             </a>
