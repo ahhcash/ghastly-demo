@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     switch (operation) {
       case "put":
         // Store key-value pair in GhastlyDB
-        const putResult = await ghastlyRequest("/v1/documents", "POST", {
+        const putResult = await ghastlyRequest("v1/documents", "POST", {
           key,
           value,
         });
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
       case "get":
         // Retrieve value by key
-        const getResult = await ghastlyRequest(`/v1/documents/${key}`, "GET");
+        const getResult = await ghastlyRequest(`v1/documents/${key}`, "GET");
         if (!getResult) {
           return NextResponse.json(
             { success: false, message: "Key not found" },
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
       case "delete":
         // Delete key-value pair
-        await ghastlyRequest(`/v1/documents/${key}`, "DELETE");
+        await ghastlyRequest(`v1/documents/${key}`, "DELETE");
         return NextResponse.json({
           success: true,
           message: `Deleted key "${key}"`,
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
 
       case "search":
         // Perform semantic search
-        const searchResult = await ghastlyRequest("/v1/search", "POST", {
+        const searchResult = await ghastlyRequest("v1/search", "POST", {
           query,
         });
         console.log(searchResult);
