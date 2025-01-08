@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { cn } from "@/lib/utils";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -19,15 +22,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          geistSans.variable,
+          geistMono.variable,
+        )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          storageKey="ghastly-theme"
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
