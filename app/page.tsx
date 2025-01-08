@@ -5,14 +5,15 @@ import { GithubIcon } from "lucide-react";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="relative min-h-screen">
       {/* Animated background gradient */}
       <div className="fixed inset-0 -z-10 h-full w-full bg-black">
         <div className="absolute inset-0 bg-gradient-to-tr from-black via-zinc-900/50 to-black" />
         <div className="absolute inset-0 bg-grid-white/[0.02] bg-grid" />
       </div>
 
-      <div className="fixed top-6 right-6 z-50">
+      {/* GitHub link - made responsive */}
+      <div className="fixed top-4 right-4 md:top-6 md:right-6 z-50">
         <a
           href="https://github.com/ahhcash/ghastly"
           target="_blank"
@@ -24,10 +25,13 @@ export default function Home() {
         </a>
       </div>
 
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <HeroSection />
-        <Console />
-        <Footer />
+      {/* Main content container */}
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-center min-h-screen py-12">
+          <HeroSection />
+          <Console />
+          <Footer />
+        </div>
       </div>
     </main>
   );

@@ -6,13 +6,15 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { dbClient } from "@/lib/api";
 
+// Define our type structure for command history
 type CommandHistory = {
   command: string;
-  output: string | React.ReactNode; // Updated to allow React components for rich formatting
+  output: string | React.ReactNode;
   type: "success" | "error" | "info";
   timestamp: Date;
 };
 
+// Types for search results structure
 type SearchResult = {
   Key: string;
   Value: string;
@@ -35,6 +37,7 @@ export default function Console() {
     },
   ]);
 
+  // Parse the command string into action and arguments
   const parseCommand = (cmd: string) => {
     const parts = cmd.trim().split(/\s+/);
     const action = parts[0].toLowerCase();
@@ -42,16 +45,21 @@ export default function Console() {
     return { action, args };
   };
 
-  // Helper function to format search results
+  // Format search results in a responsive way
   const formatSearchResults = (results: SearchResults) => {
     const length = results.results.length;
     return (
       <div className="space-y-2">
         <div className="text-blue-400">Found {length} results:</div>
         {results.results.map((result, index) => (
-          <div key={index} className="pl-4 border-l-2 border-zinc-800">
-            <div className="text-zinc-300">Key: {result.Key}</div>
-            <div className="text-zinc-400">Value: {result.Value}</div>
+          <div
+            key={index}
+            className="pl-4 border-l-2 border-zinc-800 py-2 my-2"
+          >
+            <div className="text-zinc-300 break-words">Key: {result.Key}</div>
+            <div className="text-zinc-400 break-words">
+              Value: {result.Value}
+            </div>
             <div className="text-zinc-500">
               Score: {result.Score?.toFixed(4)}
             </div>
@@ -61,6 +69,7 @@ export default function Console() {
     );
   };
 
+  // Handle command execution
   const handleCommand = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!command.trim()) return;
@@ -123,7 +132,6 @@ export default function Console() {
           }
           const query = args.join(" ");
           const searchResult = await dbClient.search(query);
-          console.log("Search result from API:", searchResult);
           response.output = searchResult.success
             ? formatSearchResults(searchResult.data)
             : "No results found";
@@ -161,15 +169,18 @@ export default function Console() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full max-w-3xl mx-auto p-4"
+      className="w-full max-w-3xl mx-auto px-4 sm:px-6 lg:px-8"
     >
+      {/* Console Container with improved mobile padding */}
       <div className="rounded-lg border border-zinc-800 bg-black/50 backdrop-blur-sm overflow-hidden">
+        {/* Console Header */}
         <div className="flex items-center gap-2 border-b border-zinc-800 p-4">
           <Terminal className="h-5 w-5 text-blue-500" />
           <h3 className="font-mono text-sm text-zinc-400">GhastlyDB Console</h3>
         </div>
 
-        <div className="p-4 font-mono text-sm space-y-2 max-h-[400px] overflow-y-auto">
+        {/* Console Output Area */}
+        <div className="p-4 font-mono text-sm space-y-2 min-h-[200px] max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
           {history.map((entry, index) => (
             <div
               key={index}
@@ -179,29 +190,34 @@ export default function Console() {
                   : entry.type === "success"
                     ? "text-green-400"
                     : "text-zinc-300"
-              }`}
+              } break-words`}
             >
               {entry.command && (
-                <div className="opacity-60"> {entry.command}</div>
+                <div className="opacity-60 break-words">$ {entry.command}</div>
               )}
-              <div className="whitespace-pre-wrap">
+              <div className="whitespace-pre-wrap break-words">
                 {typeof entry.output === "string" ? entry.output : entry.output}
               </div>
             </div>
           ))}
         </div>
 
+        {/* Command Input Area */}
         <form onSubmit={handleCommand} className="border-t border-zinc-800 p-4">
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Input
               value={command}
               onChange={(e) => setCommand(e.target.value)}
-              className="font-mono text-sm bg-transparent border-zinc-800"
+              className="flex-1 font-mono text-sm bg-transparent border-zinc-800"
               placeholder="Type a command..."
               spellCheck={false}
               autoComplete="off"
             />
-            <Button type="submit" variant="outline">
+            <Button
+              type="submit"
+              variant="outline"
+              className="w-full sm:w-auto"
+            >
               Enter
             </Button>
           </div>
