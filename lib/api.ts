@@ -7,6 +7,7 @@ type ApiResponse<T = any> = {
 class DBClient {
   private async makeRequest(
     operation: string,
+    // eslint-disable-next-line
     params: any = {},
   ): Promise<ApiResponse> {
     try {
