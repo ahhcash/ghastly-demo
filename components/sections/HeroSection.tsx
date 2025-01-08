@@ -90,6 +90,77 @@ export default function HeroSection() {
           </a>
         </div>
       </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1.0 }}
+        className="max-w-3xl mx-auto mt-24 px-6 text-center"
+      >
+        <h2 className="text-2xl font-bold text-white mb-6">
+          why did i build this? 🤔
+        </h2>
+
+        <div className="text-zinc-400 space-y-6 text-lg">
+          <p>
+            i had to perform a case study / vendor analysis for a vector DB
+            migration task during an internship. that got me interested in how
+            these things work under the hood, how vector arithmetic works etc.
+          </p>
+
+          <p>
+            i decided the best way to learn was to build one from scratch.
+            ghastlyDB uses a{" "}
+            <a
+              href="https://www.scylladb.com/glossary/log-structured-merge-tree/LSM"
+              className="text-blue-500 hover:text-blue-400"
+            >
+              Log-Structured Merge (LSM) tree architecture{" "}
+            </a>
+            (like RocksDB or ScyllaDB), with a memory-mapped memtable for writes
+            and persistent SSTables on disk. the actual storage is powered by a
+            skiplist index built from the ground up (lot of credit goes to my
+            friend, Claude). and the vector similarity search takes a simple kNN
+            approach for now (hnsw coming soon, hopefully)
+          </p>
+
+          <p>
+            right now, it's super basic - you can only do puts, gets, deletes,
+            and semantic search. but i'm actively working on adding more
+            features like proper indexing, compaction, write-ahead logs and
+            maybe full implementing the Redis API! also planning to add more
+            embedding models and distance metrics. if you're curious about any
+            of this stuff, the code is{" "}
+            <a
+              href="https://github.com/ahhcash/ghastly"
+              className="text-blue-500 hover:text-blue-400"
+              target="_blank"
+            >
+              {" "}
+              open source!{" "}
+            </a>{" "}
+            📚
+          </p>
+
+          <p className="text-zinc-500 text-sm mt-4">
+            ps: this is not production ready yet! it's just a fun learning
+            project. if you need a real vector db, check out{" "}
+            <a
+              href="https://weaviate.io"
+              className="text-blue-500 hover:text-blue-400"
+            >
+              weaviate
+            </a>{" "}
+            or{" "}
+            <a
+              href="https://milvus.io"
+              className="text-blue-500 hover:text-blue-400"
+            >
+              milvus
+            </a>
+            ! 🚀
+          </p>
+        </div>
+      </motion.div>
     </motion.div>
   );
 }
