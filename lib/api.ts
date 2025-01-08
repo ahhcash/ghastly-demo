@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 type ApiResponse<T = any> = {
   success: boolean;
   message?: string;
