@@ -4,12 +4,12 @@ import { motion } from "framer-motion";
 import { Terminal } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { dbClient } from '@/lib/api';
+import { dbClient } from "@/lib/api";
 
 type CommandHistory = {
   command: string;
   output: string | React.ReactNode; // Updated to allow React components for rich formatting
-  type: 'success' | 'error' | 'info';
+  type: "success" | "error" | "info";
   timestamp: Date;
 };
 
@@ -17,20 +17,23 @@ type SearchResult = {
   Key: string;
   Value: string;
   Score: number;
-}
+};
 
 type SearchResults = {
-  results: SearchResult[]
-}
+  results: SearchResult[];
+};
 
 export default function Console() {
   const [command, setCommand] = useState("");
-  const [history, setHistory] = useState<CommandHistory[]>([{
-    command: "",
-    output: "Welcome to GhastlyDB CLI v0.1.0\nType 'help' to see available commands",
-    type: 'info',
-    timestamp: new Date()
-  }]);
+  const [history, setHistory] = useState<CommandHistory[]>([
+    {
+      command: "",
+      output:
+        "Welcome to GhastlyDB CLI v0.1.0\nType 'help' to see available commands",
+      type: "info",
+      timestamp: new Date(),
+    },
+  ]);
 
   const parseCommand = (cmd: string) => {
     const parts = cmd.trim().split(/\s+/);
@@ -49,7 +52,9 @@ export default function Console() {
           <div key={index} className="pl-4 border-l-2 border-zinc-800">
             <div className="text-zinc-300">Key: {result.Key}</div>
             <div className="text-zinc-400">Value: {result.Value}</div>
-            <div className="text-zinc-500">Score: {result.Score?.toFixed(4)}</div>
+            <div className="text-zinc-500">
+              Score: {result.Score?.toFixed(4)}
+            </div>
           </div>
         ))}
       </div>
@@ -64,8 +69,8 @@ export default function Console() {
     let response: CommandHistory = {
       command,
       output: "",
-      type: 'info',
-      timestamp: new Date()
+      type: "info",
+      timestamp: new Date(),
     };
 
     try {
@@ -78,7 +83,7 @@ export default function Console() {
   search <query>          - Perform semantic search
   clear                   - Clear the console
   help                    - Show this help message`;
-          response.type = 'info';
+          response.type = "info";
           break;
 
         case "put":
@@ -89,7 +94,7 @@ export default function Console() {
           const value = valueParts.join(" ");
           const putResult = await dbClient.put(key, value);
           response.output = putResult.message || "Stored successfully";
-          response.type = putResult.success ? 'success' : 'error';
+          response.type = putResult.success ? "success" : "error";
           break;
 
         case "get":
@@ -99,8 +104,8 @@ export default function Console() {
           const getResult = await dbClient.get(args[0]);
           response.output = getResult.success
             ? `Value: ${getResult.data}`
-            : (getResult.message || "Key not found");
-          response.type = getResult.success ? 'success' : 'error';
+            : getResult.message || "Key not found";
+          response.type = getResult.success ? "success" : "error";
           break;
 
         case "delete":
@@ -109,7 +114,7 @@ export default function Console() {
           }
           const deleteResult = await dbClient.delete(args[0]);
           response.output = deleteResult.message || "Key deleted successfully";
-          response.type = deleteResult.success ? 'success' : 'error';
+          response.type = deleteResult.success ? "success" : "error";
           break;
 
         case "search":
@@ -122,16 +127,18 @@ export default function Console() {
           response.output = searchResult.success
             ? formatSearchResults(searchResult.data)
             : "No results found";
-          response.type = searchResult.success ? 'success' : 'info';
+          response.type = searchResult.success ? "success" : "info";
           break;
 
         case "clear":
-          setHistory([{
-            command: "",
-            output: "Console cleared",
-            type: 'info',
-            timestamp: new Date()
-          }]);
+          setHistory([
+            {
+              command: "",
+              output: "Console cleared",
+              type: "info",
+              timestamp: new Date(),
+            },
+          ]);
           setCommand("");
           return;
 
@@ -139,11 +146,12 @@ export default function Console() {
           throw new Error(`Unknown command: ${action}`);
       }
     } catch (error) {
-      response.output = error instanceof Error ? error.message : "An error occurred";
-      response.type = 'error';
+      response.output =
+        error instanceof Error ? error.message : "An error occurred";
+      response.type = "error";
     }
 
-    setHistory(prev => [...prev, response]);
+    setHistory((prev) => [...prev, response]);
     setCommand("");
   };
 
@@ -163,14 +171,21 @@ export default function Console() {
 
         <div className="p-4 font-mono text-sm space-y-2 max-h-[400px] overflow-y-auto">
           {history.map((entry, index) => (
-            <div key={index} className={`${
-              entry.type === 'error' ? 'text-red-400' :
-              entry.type === 'success' ? 'text-green-400' :
-              'text-zinc-300'
-            }`}>
-              {entry.command && <div className="opacity-60">> {entry.command}</div>}
+            <div
+              key={index}
+              className={`${
+                entry.type === "error"
+                  ? "text-red-400"
+                  : entry.type === "success"
+                    ? "text-green-400"
+                    : "text-zinc-300"
+              }`}
+            >
+              {entry.command && (
+                <div className="opacity-60"> {entry.command}</div>
+              )}
               <div className="whitespace-pre-wrap">
-                {typeof entry.output === 'string' ? entry.output : entry.output}
+                {typeof entry.output === "string" ? entry.output : entry.output}
               </div>
             </div>
           ))}
